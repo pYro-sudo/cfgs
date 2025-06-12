@@ -2,7 +2,7 @@ autoinstall:
   version: 1
   identity:
     hostname: ubuntu-server
-    password: pswd # "$6$exDY1mhS4KUYCE/2$zmn9ToZwTKLhCw.b4/b.ZRTIZM30JZ4QrOQ2aOXJ8yk96xpcCof0kxKwuX1kqLG/ygbJ1f8wxED22bTL4FAcP0"
+    password: pswd # "$6$exDY1mhS4KUYCE/2$zmn9ToZwTKLhCw.b4/b.ZRTIZM30JZ4QrOQ2aOXJ8yk96xpcCof0kxKwuX1kqLG/ygbJ1f8wxED22bTL4FAcP0" #that was kinda out of my head
     username: vagrant
   ssh:
     install-server: true
