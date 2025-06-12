@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: MasterConfig
+kubernetesMasterConfig:
+  apiServerArguments: {}
+  controllerArguments: {}
+  schedulerArguments: {}
+  proxyClientInfo:
+    certFile: "/etc/origin/master/proxy-client.crt"
+    keyFile: "/etc/origin/master/proxy-client.key"
+  servicesSubnet: "172.30.0.0/16"
+  staticNodeNames: []
+  controllerConfig:
+    serviceServingCert:
+      signer:
+        certFile: "/etc/origin/master/serviceaccounts.public.key"
+        keyFile: "/etc/origin/master/serviceaccounts.private.key"
+aggregatorConfig:
+  proxyClientInfo:
+    certFile: "/etc/origin/master/proxy-client.crt"
+    keyFile: "/etc/origin/master/proxy-client.key"
+etcdClientInfo:
+  urls: ["https://127.0.0.1:4001"]
+  ca: "/etc/origin/master/ca.crt"
+  certFile: "/etc/origin/master/master.etcd-client.crt"
+  keyFile: "/etc/origin/master/master.etcd-client.key"
+oauthConfig:
+  masterPublicURL: "https://localhost:8446"
+  masterURL: "https://localhost:8446"
+  assetPublicURL: "https://localhost:8446/console/"
+  identityProviders:
+  - name: allow_all
+    challenge: true
+    login: true
+    mappingMethod: claim
+    provider:
+      apiVersion: v1
+      kind: AllowAllPasswordIdentityProvider
+  grantConfig:
+    method: "auto"
+  sessionConfig:
+    sessionSecretsFile: "/etc/origin/master/session-secrets.yaml"
+    sessionMaxAgeSeconds: 300
+    sessionName: "ssn"
+kubeletClientInfo:
+  port: 10250
+  ca: "/etc/origin/master/ca.crt"
+  certFile: "/etc/origin/master/master.kubelet-client.crt"
+  keyFile: "/etc/origin/master/master.kubelet-client.key"
+serviceAccountConfig:
+  managedNames: ["default", "builder", "deployer"]
+  privateKeyFile: "/etc/origin/master/serviceaccounts.private.key"
+  publicKeyFiles: ["/etc/origin/master/serviceaccounts.public.key"]
+  masterCA: "/etc/origin/master/ca.crt"
+servingInfo:
+  bindAddress: "0.0.0.0:8446"
+  certFile: "/etc/origin/master/master.server.crt"
+  clientCA: "/etc/origin/master/ca.crt"
+  keyFile: "/etc/origin/master/master.server.key"
+  masterClients:
+    openShiftLoopbackKubeConfig: "/etc/origin/master/admin.kubeconfig"
+imageConfig:
+  format: "openshift/origin-${component}:${version}"
+  latest: false
+projectConfig:
+  securityAllocator:
+    uidAllocatorRange: "1000-1999/20"
+    mcsAllocatorRange: "s0:/2"
+    mcsLabelsPerProject: 5
+auditConfig:
+  enabled: false
+  auditFilePath: "/var/log/openshift-audit.log"
+  maximumFileRetentionDays: 7
+  maximumFileSizeMegabytes: 10
+  maximumRetainedFiles: 10
+policyConfig:
+  bootstrapPolicyFile: "/etc/origin/master/policy.json"
+  openshiftInfrastructureNamespace: "openshift-infra"
+  openshiftSharedResourcesNamespace: "openshift"
+networkConfig:
+  clusterNetworkCIDR: "10.128.0.0/16"
+  hostSubnetLength: 9
+  networkPluginName: "redhat/openshift-ovs-subnet"
+  serviceNetworkCIDR: "172.30.0.0/16"
+volumeConfig:
+  dynamicProvisioningEnabled: true
